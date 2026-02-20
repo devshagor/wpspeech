@@ -30,7 +30,7 @@ $show_speed    = ! empty( $options['show_speed_control'] );
 			</span>
 			<div>
 				<p class="wpspeech-player-title"><?php esc_html_e( 'Listen to this article', 'wpspeech' ); ?></p>
-				<p class="wpspeech-player-subtitle"><?php esc_html_e( 'Powered by Text-to-Speech', 'wpspeech' ); ?></p>
+				<p class="wpspeech-player-subtitle"><?php esc_html_e( 'Powered by WP Speech', 'wpspeech' ); ?></p>
 			</div>
 		</div>
 

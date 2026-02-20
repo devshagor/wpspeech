@@ -73,7 +73,7 @@
 							),
 							el( 'div', {},
 								el( 'div', { className: 'wpspeech-block-title' }, i18n.__( 'Listen to this article', 'wpspeech' ) ),
-								el( 'div', { className: 'wpspeech-block-subtitle' }, i18n.__( 'Powered by Text-to-Speech', 'wpspeech' ) )
+								el( 'div', { className: 'wpspeech-block-subtitle' }, i18n.__( 'Powered by WP Speech', 'wpspeech' ) )
 							)
 						),
 

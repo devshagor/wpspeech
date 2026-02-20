@@ -305,6 +305,7 @@
 	transition: transform 0.15s, box-shadow 0.15s;
 	-webkit-tap-highlight-color: transparent;
 	touch-action: manipulation;
+	padding: 0 !important;
 }
 
 .wpspeech-sticky .wpspeech-sticky-play:hover {
