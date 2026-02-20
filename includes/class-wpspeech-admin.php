@@ -149,8 +149,8 @@ class WPSPEECH_Admin {
 	public function enqueue_admin_assets( $hook ) {
 		$plugin_pages = array(
 			'toplevel_page_wpspeech',
-			'text-to-speech_page_wpspeech-analytics',
-			'text-to-speech_page_wpspeech-help',
+			'wpspeech_page_wpspeech-analytics',
+			'wpspeech_page_wpspeech-help'
 		);
 
 		if ( ! in_array( $hook, $plugin_pages, true ) ) {
