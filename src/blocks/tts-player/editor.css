@@ -1,0 +1,125 @@
+/* =============================================
+   TTS Player Block — Editor Preview
+   ============================================= */
+
+.wp-tts-block-preview {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+}
+
+/* ---- Info Notice ---- */
+.wp-tts-block-notice {
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	padding: 10px 14px;
+	background: #eff6ff;
+	border: 1px solid #bfdbfe;
+	border-radius: 8px;
+	margin-bottom: 12px;
+	color: #1e40af;
+	font-size: 12px;
+	line-height: 1.5;
+}
+
+.wp-tts-block-notice svg {
+	flex-shrink: 0;
+	margin-top: 1px;
+}
+
+/* ---- Player Mockup ---- */
+.wp-tts-block-player {
+	background: #f8f9fa;
+	border: 1px solid #e2e4e7;
+	border-radius: 10px;
+	padding: 14px 18px;
+}
+
+.wp-tts-block-header-row {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 12px;
+}
+
+.wp-tts-block-headphone {
+	color: var(--wp-tts-color, #d60017);
+	flex-shrink: 0;
+}
+
+.wp-tts-block-title {
+	font-size: 13px;
+	font-weight: 600;
+	color: #1e293b;
+	line-height: 1.3;
+}
+
+.wp-tts-block-subtitle {
+	font-size: 11px;
+	color: #94a3b8;
+	line-height: 1.3;
+}
+
+/* Controls */
+.wp-tts-block-controls {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.wp-tts-block-play-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 7px 14px;
+	background: var(--wp-tts-color, #d60017);
+	color: #fff;
+	border-radius: 6px;
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.wp-tts-block-stop-btn {
+	display: inline-flex;
+	align-items: center;
+	padding: 7px 9px;
+	background: #e2e4e7;
+	border-radius: 6px;
+	color: #50575e;
+	opacity: 0.5;
+}
+
+.wp-tts-block-speed {
+	padding: 4px 8px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-size: 11px;
+	color: #50575e;
+	background: #fff;
+}
+
+.wp-tts-block-counter {
+	margin-left: auto;
+	font-size: 11px;
+	color: #94a3b8;
+}
+
+/* Progress */
+.wp-tts-block-progress {
+	height: 4px;
+	background: #e2e4e7;
+	border-radius: 3px;
+	margin-top: 10px;
+	overflow: hidden;
+}
+
+.wp-tts-block-progress-fill {
+	height: 100%;
+	width: 35%;
+	background: var(--wp-tts-color, #d60017);
+	border-radius: 3px;
+}
+
+/* ---- Selected state highlight ---- */
+.wp-block-wp-tts-player.is-selected .wp-tts-block-player {
+	box-shadow: 0 0 0 1px var(--wp-tts-color, #d60017);
+}
