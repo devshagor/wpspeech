@@ -1,10 +1,10 @@
 <?php
 /**
- * REST API endpoints for WP Text to Speech.
+ * REST API endpoints for Wpspeech.
  *
  * Provides speech data for React Native and other mobile apps.
  *
- * @package WP_Text_To_Speech
+ * @package Wpspeech
  * @since   1.0.0
  */
 
@@ -14,20 +14,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class WP_TTS_REST_API
+ * Class WPSPEECH_REST_API
  *
- * Registers read-only REST API routes under the wp-tts/v1 namespace.
+ * Registers read-only REST API routes under the wpspeech/v1 namespace.
  * All endpoints are intentionally public (no authentication required) because
  * they only expose published post content — the same data already visible to
  * any site visitor. This allows mobile apps and third-party clients to fetch
  * article text for native TTS playback without requiring API keys.
  *
  * The REST API is disabled by default and must be explicitly enabled by an
- * administrator via Text to Speech > Settings > API tab.
+ * administrator via WP Speech > Settings > API tab.
  *
  * @since 1.0.0
  */
-class WP_TTS_REST_API {
+class WPSPEECH_REST_API {
 
 	/**
 	 * REST API namespace.
@@ -35,7 +35,7 @@ class WP_TTS_REST_API {
 	 * @since 1.0.0
 	 * @var string
 	 */
-	const REST_NAMESPACE = 'wp-tts/v1';
+	const REST_NAMESPACE = 'wpspeech/v1';
 
 	/**
 	 * Constructor. Register hooks.
@@ -55,7 +55,7 @@ class WP_TTS_REST_API {
 	 */
 	public function register_routes() {
 
-		// GET /wp-json/wp-tts/v1/speech/{id}.
+		// GET /wp-json/wpspeech/v1/speech/{id}.
 		// Public: returns only published post content (same as front-end).
 		register_rest_route(
 			self::REST_NAMESPACE,
@@ -68,7 +68,7 @@ class WP_TTS_REST_API {
 					'id' => array(
 						'required'          => true,
 						'type'              => 'integer',
-						'description'       => __( 'Post ID.', 'wp-text-to-speech' ),
+						'description'       => __( 'Post ID.', 'wpspeech' ),
 						'validate_callback' => function ( $param ) {
 							return is_numeric( $param ) && (int) $param > 0;
 						},
@@ -78,7 +78,7 @@ class WP_TTS_REST_API {
 			)
 		);
 
-		// GET /wp-json/wp-tts/v1/settings.
+		// GET /wp-json/wpspeech/v1/settings.
 		// Public: returns only non-sensitive TTS playback settings.
 		register_rest_route(
 			self::REST_NAMESPACE,
@@ -90,7 +90,7 @@ class WP_TTS_REST_API {
 			)
 		);
 
-		// GET /wp-json/wp-tts/v1/posts.
+		// GET /wp-json/wpspeech/v1/posts.
 		// Public: returns only published posts (same as front-end archives).
 		register_rest_route(
 			self::REST_NAMESPACE,
@@ -103,7 +103,7 @@ class WP_TTS_REST_API {
 					'post_type' => array(
 						'default'           => 'post',
 						'type'              => 'string',
-						'description'       => __( 'Post type slug.', 'wp-text-to-speech' ),
+						'description'       => __( 'Post type slug.', 'wpspeech' ),
 						'sanitize_callback' => 'sanitize_key',
 						'validate_callback' => function ( $param ) {
 							return post_type_exists( sanitize_key( $param ) );
@@ -112,7 +112,7 @@ class WP_TTS_REST_API {
 					'per_page'  => array(
 						'default'           => 10,
 						'type'              => 'integer',
-						'description'       => __( 'Results per page (max 50).', 'wp-text-to-speech' ),
+						'description'       => __( 'Results per page (max 50).', 'wpspeech' ),
 						'sanitize_callback' => 'absint',
 						'validate_callback' => function ( $param ) {
 							return is_numeric( $param ) && (int) $param > 0 && (int) $param <= 50;
@@ -121,7 +121,7 @@ class WP_TTS_REST_API {
 					'page'      => array(
 						'default'           => 1,
 						'type'              => 'integer',
-						'description'       => __( 'Page number.', 'wp-text-to-speech' ),
+						'description'       => __( 'Page number.', 'wpspeech' ),
 						'sanitize_callback' => 'absint',
 						'validate_callback' => function ( $param ) {
 							return is_numeric( $param ) && (int) $param > 0;
@@ -130,7 +130,7 @@ class WP_TTS_REST_API {
 					'search'    => array(
 						'default'           => '',
 						'type'              => 'string',
-						'description'       => __( 'Search query.', 'wp-text-to-speech' ),
+						'description'       => __( 'Search query.', 'wpspeech' ),
 						'sanitize_callback' => 'sanitize_text_field',
 					),
 				),
@@ -139,7 +139,7 @@ class WP_TTS_REST_API {
 	}
 
 	/**
-	 * GET /wp-json/wp-tts/v1/speech/{id}
+	 * GET /wp-json/wpspeech/v1/speech/{id}
 	 *
 	 * Returns cleaned article text split into sentences, ready for native TTS.
 	 *
@@ -154,20 +154,20 @@ class WP_TTS_REST_API {
 
 		if ( ! $post || 'publish' !== $post->post_status ) {
 			return new WP_Error(
-				'wp_tts_post_not_found',
-				__( 'Post not found or not published.', 'wp-text-to-speech' ),
+				'wpspeech_post_not_found',
+				__( 'Post not found or not published.', 'wpspeech' ),
 				array( 'status' => 404 )
 			);
 		}
 
 		// Check if TTS is enabled for this post type.
-		$options       = get_option( WP_TTS_OPTION_KEY, array() );
+		$options       = get_option( WPSPEECH_OPTION_KEY, array() );
 		$enabled_types = isset( $options['enabled_post_types'] ) ? (array) $options['enabled_post_types'] : array( 'post' );
 
 		if ( ! in_array( $post->post_type, $enabled_types, true ) ) {
 			return new WP_Error(
-				'wp_tts_not_enabled',
-				__( 'Text-to-speech is not enabled for this post type.', 'wp-text-to-speech' ),
+				'wpspeech_not_enabled',
+				__( 'Text-to-speech is not enabled for this post type.', 'wpspeech' ),
 				array( 'status' => 403 )
 			);
 		}
@@ -201,7 +201,7 @@ class WP_TTS_REST_API {
 	}
 
 	/**
-	 * GET /wp-json/wp-tts/v1/settings
+	 * GET /wp-json/wpspeech/v1/settings
 	 *
 	 * Returns TTS settings for the mobile app to configure its TTS engine.
 	 *
@@ -211,7 +211,7 @@ class WP_TTS_REST_API {
 	 * @return WP_REST_Response Response object.
 	 */
 	public function get_tts_settings( $request ) {
-		$options = get_option( WP_TTS_OPTION_KEY, array() );
+		$options = get_option( WPSPEECH_OPTION_KEY, array() );
 
 		return rest_ensure_response( array(
 			'tts_settings'       => $this->format_settings( $options ),
@@ -220,7 +220,7 @@ class WP_TTS_REST_API {
 	}
 
 	/**
-	 * GET /wp-json/wp-tts/v1/posts
+	 * GET /wp-json/wpspeech/v1/posts
 	 *
 	 * Returns a paginated list of posts that have TTS enabled.
 	 *
@@ -230,7 +230,7 @@ class WP_TTS_REST_API {
 	 * @return WP_REST_Response|WP_Error Response object or error.
 	 */
 	public function get_tts_enabled_posts( $request ) {
-		$options       = get_option( WP_TTS_OPTION_KEY, array() );
+		$options       = get_option( WPSPEECH_OPTION_KEY, array() );
 		$enabled_types = isset( $options['enabled_post_types'] ) ? (array) $options['enabled_post_types'] : array( 'post' );
 		$post_type     = $request->get_param( 'post_type' );
 		$per_page      = min( (int) $request->get_param( 'per_page' ), 50 );
@@ -239,8 +239,8 @@ class WP_TTS_REST_API {
 
 		if ( ! in_array( $post_type, $enabled_types, true ) ) {
 			return new WP_Error(
-				'wp_tts_not_enabled',
-				__( 'Text-to-speech is not enabled for this post type.', 'wp-text-to-speech' ),
+				'wpspeech_not_enabled',
+				__( 'Text-to-speech is not enabled for this post type.', 'wpspeech' ),
 				array( 'status' => 403 )
 			);
 		}
@@ -301,7 +301,7 @@ class WP_TTS_REST_API {
 	 */
 	private function html_to_plain_text( $html ) {
 		// Remove the TTS player HTML if present.
-		$html = preg_replace( '/<div class="wp-tts-player"[^>]*>.*?<\/div>\s*<\/div>/s', '', $html );
+		$html = preg_replace( '/<div class="wpspeech-player"[^>]*>.*?<\/div>\s*<\/div>/s', '', $html );
 
 		// Remove script and style tags with content.
 		$html = preg_replace( '/<(script|style)[^>]*>.*?<\/\1>/si', '', $html );

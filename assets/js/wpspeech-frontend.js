@@ -3,12 +3,12 @@
 
 	// Bail if Web Speech API is not supported.
 	if ( ! ( 'speechSynthesis' in window ) ) {
-		var player = document.querySelector( '.wp-tts-player' );
+		var player = document.querySelector( '.wpspeech-player' );
 		if ( player ) {
 			var msg = ( window.wpTtsSettings && window.wpTtsSettings.i18n && window.wpTtsSettings.i18n.unsupported )
 			? window.wpTtsSettings.i18n.unsupported
 			: 'Text-to-speech is not supported in this browser.';
-		player.innerHTML = '<p class="wp-tts-unsupported">' + msg + '</p>';
+		player.innerHTML = '<p class="wpspeech-unsupported">' + msg + '</p>';
 		}
 		return;
 	}
@@ -36,16 +36,16 @@
 	document.addEventListener( 'DOMContentLoaded', init );
 
 	function init() {
-		playerEl     = document.querySelector( '.wp-tts-player' );
-		playBtn      = document.querySelector( '.wp-tts-play' );
-		stopBtn      = document.querySelector( '.wp-tts-stop' );
-		playIcon     = document.querySelector( '.wp-tts-icon-play' );
-		pauseIcon    = document.querySelector( '.wp-tts-icon-pause' );
-		btnLabel     = document.querySelector( '.wp-tts-btn-label' );
-		progressFill = document.querySelector( '.wp-tts-progress-fill' );
-		progressBar  = document.querySelector( '.wp-tts-progress-bar' );
-		timeDisplay  = document.querySelector( '.wp-tts-time' );
-		speedSelect  = document.querySelector( '.wp-tts-speed-select' );
+		playerEl     = document.querySelector( '.wpspeech-player' );
+		playBtn      = document.querySelector( '.wpspeech-play' );
+		stopBtn      = document.querySelector( '.wpspeech-stop' );
+		playIcon     = document.querySelector( '.wpspeech-icon-play' );
+		pauseIcon    = document.querySelector( '.wpspeech-icon-pause' );
+		btnLabel     = document.querySelector( '.wpspeech-btn-label' );
+		progressFill = document.querySelector( '.wpspeech-progress-fill' );
+		progressBar  = document.querySelector( '.wpspeech-progress-bar' );
+		timeDisplay  = document.querySelector( '.wpspeech-time' );
+		speedSelect  = document.querySelector( '.wpspeech-speed-select' );
 
 		// Find article content - try theme-specific then generic selectors.
 		contentEl = document.querySelector( '.single-post-body' )
@@ -59,7 +59,7 @@
 
 		// Extract text: clone content and remove the player before reading.
 		var contentClone = contentEl.cloneNode( true );
-		var playerInClone = contentClone.querySelector( '.wp-tts-player' );
+		var playerInClone = contentClone.querySelector( '.wpspeech-player' );
 		if ( playerInClone ) {
 			playerInClone.remove();
 		}
@@ -177,21 +177,21 @@
 			btnLabel.textContent    = i18n.pause || 'Pause';
 			playBtn.setAttribute( 'aria-label', i18n.pause || 'Pause' );
 			stopBtn.disabled        = false;
-			playerEl.classList.add( 'wp-tts-active' );
+			playerEl.classList.add( 'wpspeech-active' );
 		} else if ( isPaused ) {
 			playIcon.style.display  = 'inline';
 			pauseIcon.style.display = 'none';
 			btnLabel.textContent    = i18n.resume || 'Resume';
 			playBtn.setAttribute( 'aria-label', i18n.resume || 'Resume' );
 			stopBtn.disabled        = false;
-			playerEl.classList.add( 'wp-tts-active' );
+			playerEl.classList.add( 'wpspeech-active' );
 		} else {
 			playIcon.style.display  = 'inline';
 			pauseIcon.style.display = 'none';
 			btnLabel.textContent    = i18n.listen || 'Listen';
 			playBtn.setAttribute( 'aria-label', i18n.listen || 'Listen' );
 			stopBtn.disabled        = true;
-			playerEl.classList.remove( 'wp-tts-active' );
+			playerEl.classList.remove( 'wpspeech-active' );
 		}
 		updateStickyUI();
 	}
@@ -263,35 +263,35 @@
 		var color = settings.buttonColor || '#d60017';
 
 		stickyEl = document.createElement( 'div' );
-		stickyEl.className = 'wp-tts-sticky';
+		stickyEl.className = 'wpspeech-sticky';
 		stickyEl.setAttribute( 'role', 'region' );
-		stickyEl.setAttribute( 'aria-label', i18n.listen || 'Text to Speech Player' );
-		stickyEl.style.cssText = '--wp-tts-color: ' + color + ';';
+		stickyEl.setAttribute( 'aria-label', i18n.listen || 'WP Speech Player' );
+		stickyEl.style.cssText = '--wpspeech-color: ' + color + ';';
 
 		stickyEl.innerHTML =
-			'<button type="button" class="wp-tts-sticky-play" aria-label="' + ( i18n.pause || 'Pause' ) + '">' +
-				'<svg class="wp-tts-sticky-icon-play" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>' +
-				'<svg class="wp-tts-sticky-icon-pause" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>' +
+			'<button type="button" class="wpspeech-sticky-play" aria-label="' + ( i18n.pause || 'Pause' ) + '">' +
+				'<svg class="wpspeech-sticky-icon-play" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>' +
+				'<svg class="wpspeech-sticky-icon-pause" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>' +
 			'</button>' +
-			'<div class="wp-tts-sticky-info">' +
-				'<span class="wp-tts-sticky-title">' + ( i18n.listen || 'Listen' ) + '</span>' +
-				'<div class="wp-tts-sticky-progress"><div class="wp-tts-sticky-progress-fill"></div></div>' +
+			'<div class="wpspeech-sticky-info">' +
+				'<span class="wpspeech-sticky-title">' + ( i18n.listen || 'Listen' ) + '</span>' +
+				'<div class="wpspeech-sticky-progress"><div class="wpspeech-sticky-progress-fill"></div></div>' +
 			'</div>' +
-			'<div class="wp-tts-sticky-wave"><span></span><span></span><span></span><span></span></div>' +
-			'<span class="wp-tts-sticky-counter"></span>' +
-			'<button type="button" class="wp-tts-sticky-stop" aria-label="' + 'Stop' + '">' +
+			'<div class="wpspeech-sticky-wave"><span></span><span></span><span></span><span></span></div>' +
+			'<span class="wpspeech-sticky-counter"></span>' +
+			'<button type="button" class="wpspeech-sticky-stop" aria-label="' + 'Stop' + '">' +
 				'<svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><rect x="5" y="5" width="14" height="14" rx="2"/></svg>' +
 			'</button>';
 
 		document.body.appendChild( stickyEl );
 
 		// Cache references.
-		stickyPlayBtn      = stickyEl.querySelector( '.wp-tts-sticky-play' );
-		stickyStopBtn      = stickyEl.querySelector( '.wp-tts-sticky-stop' );
-		stickyProgressFill = stickyEl.querySelector( '.wp-tts-sticky-progress-fill' );
-		stickyCounter      = stickyEl.querySelector( '.wp-tts-sticky-counter' );
-		stickyPlayIcon     = stickyEl.querySelector( '.wp-tts-sticky-icon-play' );
-		stickyPauseIcon    = stickyEl.querySelector( '.wp-tts-sticky-icon-pause' );
+		stickyPlayBtn      = stickyEl.querySelector( '.wpspeech-sticky-play' );
+		stickyStopBtn      = stickyEl.querySelector( '.wpspeech-sticky-stop' );
+		stickyProgressFill = stickyEl.querySelector( '.wpspeech-sticky-progress-fill' );
+		stickyCounter      = stickyEl.querySelector( '.wpspeech-sticky-counter' );
+		stickyPlayIcon     = stickyEl.querySelector( '.wpspeech-sticky-icon-play' );
+		stickyPauseIcon    = stickyEl.querySelector( '.wpspeech-sticky-icon-pause' );
 
 		// Mirror events to the main player controls.
 		stickyPlayBtn.addEventListener( 'click', togglePlayPause );
@@ -304,9 +304,9 @@
 		}
 		// Show sticky only when playing/paused AND original player is out of view.
 		if ( ( isPlaying || isPaused ) && ! playerVisible ) {
-			stickyEl.classList.add( 'wp-tts-sticky-visible' );
+			stickyEl.classList.add( 'wpspeech-sticky-visible' );
 		} else {
-			stickyEl.classList.remove( 'wp-tts-sticky-visible' );
+			stickyEl.classList.remove( 'wpspeech-sticky-visible' );
 		}
 	}
 
@@ -314,8 +314,8 @@
 		if ( ! stickyEl ) {
 			return;
 		}
-		var stickyTitle = stickyEl.querySelector( '.wp-tts-sticky-title' );
-		var stickyWave  = stickyEl.querySelector( '.wp-tts-sticky-wave' );
+		var stickyTitle = stickyEl.querySelector( '.wpspeech-sticky-title' );
+		var stickyWave  = stickyEl.querySelector( '.wpspeech-sticky-wave' );
 
 		if ( isPlaying ) {
 			stickyPlayIcon.style.display  = 'none';

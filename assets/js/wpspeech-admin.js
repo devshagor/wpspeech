@@ -8,25 +8,25 @@
 			var tab = $tab.data( 'tab' );
 
 			// Update ARIA on all tabs.
-			$( '.wp-tts-tab' ).removeClass( 'wp-tts-tab-active' )
+			$( '.wpspeech-tab' ).removeClass( 'wpspeech-tab-active' )
 				.attr( 'aria-selected', 'false' )
 				.attr( 'tabindex', '-1' );
-			$tab.addClass( 'wp-tts-tab-active' )
+			$tab.addClass( 'wpspeech-tab-active' )
 				.attr( 'aria-selected', 'true' )
 				.removeAttr( 'tabindex' );
 
 			// Update panels.
-			$( '.wp-tts-tab-panel' ).removeClass( 'wp-tts-tab-panel-active' );
-			$( '.wp-tts-tab-panel[data-panel="' + tab + '"]' ).addClass( 'wp-tts-tab-panel-active' );
+			$( '.wpspeech-tab-panel' ).removeClass( 'wpspeech-tab-panel-active' );
+			$( '.wpspeech-tab-panel[data-panel="' + tab + '"]' ).addClass( 'wpspeech-tab-panel-active' );
 		}
 
-		$( '.wp-tts-tab' ).on( 'click', function () {
+		$( '.wpspeech-tab' ).on( 'click', function () {
 			activateTab( $( this ) );
 		});
 
 		// Arrow key navigation between tabs.
-		$( '.wp-tts-tab' ).on( 'keydown', function ( e ) {
-			var $tabs = $( '.wp-tts-tab' );
+		$( '.wpspeech-tab' ).on( 'keydown', function ( e ) {
+			var $tabs = $( '.wpspeech-tab' );
 			var index = $tabs.index( this );
 			var $next;
 
@@ -51,34 +51,34 @@
 		});
 
 		// ---- Color Picker ----
-		$( '.wp-tts-color-field' ).wpColorPicker( {
+		$( '.wpspeech-color-field' ).wpColorPicker( {
 			change: function ( event, ui ) {
 				// Update mockup live.
 				var color = ui.color.toString();
-				$( '.wp-tts-player-mockup' ).css( '--wp-tts-color', color );
+				$( '.wpspeech-player-mockup' ).css( '--wpspeech-color', color );
 			}
 		});
 
 		// ---- Range Sliders ----
-		$( '#wp-tts-speech-rate' ).on( 'input', function () {
+		$( '#wpspeech-speech-rate' ).on( 'input', function () {
 			var val = parseFloat( this.value ) + 'x';
-			$( '#wp-tts-rate-val' ).text( val );
+			$( '#wpspeech-rate-val' ).text( val );
 			this.setAttribute( 'aria-valuetext', val );
 		});
-		$( '#wp-tts-pitch' ).on( 'input', function () {
+		$( '#wpspeech-pitch' ).on( 'input', function () {
 			var val = parseFloat( this.value );
-			$( '#wp-tts-pitch-val' ).text( val );
+			$( '#wpspeech-pitch-val' ).text( val );
 			this.setAttribute( 'aria-valuetext', String( val ) );
 		});
-		$( '#wp-tts-volume' ).on( 'input', function () {
+		$( '#wpspeech-volume' ).on( 'input', function () {
 			var val = parseFloat( this.value );
-			$( '#wp-tts-volume-val' ).text( val );
+			$( '#wpspeech-volume-val' ).text( val );
 			this.setAttribute( 'aria-valuetext', String( val ) );
 		});
 
 		// ---- Voice Dropdown ----
-		var voiceSelect = document.getElementById( 'wp-tts-voice-name' );
-		var savedVoice  = document.getElementById( 'wp-tts-voice-saved' );
+		var voiceSelect = document.getElementById( 'wpspeech-voice-name' );
+		var savedVoice  = document.getElementById( 'wpspeech-voice-saved' );
 
 		function populateVoices() {
 			if ( ! voiceSelect || typeof speechSynthesis === 'undefined' ) {
@@ -110,14 +110,14 @@
 		}
 
 		// ---- REST API Toggle ----
-		var $apiToggle   = $( '#wp-tts-rest-api' );
-		var $apiEndpoints = $( '#wp-tts-api-endpoints' );
+		var $apiToggle   = $( '#wpspeech-rest-api' );
+		var $apiEndpoints = $( '#wpspeech-api-endpoints' );
 
 		function updateApiEndpoints() {
 			if ( $apiToggle.is( ':checked' ) ) {
-				$apiEndpoints.removeClass( 'wp-tts-api-disabled' );
+				$apiEndpoints.removeClass( 'wpspeech-api-disabled' );
 			} else {
-				$apiEndpoints.addClass( 'wp-tts-api-disabled' );
+				$apiEndpoints.addClass( 'wpspeech-api-disabled' );
 			}
 		}
 
@@ -129,8 +129,8 @@
 		// ---- Preview ----
 		var isPreviewPlaying = false;
 
-		$( '#wp-tts-preview-btn' ).on( 'click', function () {
-			var text = $( '#wp-tts-preview-text' ).val();
+		$( '#wpspeech-preview-btn' ).on( 'click', function () {
+			var text = $( '#wpspeech-preview-text' ).val();
 			if ( ! text ) {
 				return;
 			}
@@ -142,9 +142,9 @@
 			}
 
 			var utter    = new SpeechSynthesisUtterance( text );
-			utter.rate   = parseFloat( $( '#wp-tts-speech-rate' ).val() || 1 );
-			utter.pitch  = parseFloat( $( '#wp-tts-pitch' ).val() || 1 );
-			utter.volume = parseFloat( $( '#wp-tts-volume' ).val() || 1 );
+			utter.rate   = parseFloat( $( '#wpspeech-speech-rate' ).val() || 1 );
+			utter.pitch  = parseFloat( $( '#wpspeech-pitch' ).val() || 1 );
+			utter.volume = parseFloat( $( '#wpspeech-volume' ).val() || 1 );
 
 			var voiceName = voiceSelect ? voiceSelect.value : '';
 			if ( voiceName ) {
@@ -170,25 +170,25 @@
 			speechSynthesis.speak( utter );
 		});
 
-		$( '#wp-tts-stop-preview-btn' ).on( 'click', function () {
+		$( '#wpspeech-stop-preview-btn' ).on( 'click', function () {
 			speechSynthesis.cancel();
 			stopPreviewUI();
 		});
 
 		function startPreviewUI() {
 			isPreviewPlaying = true;
-			$( '#wp-tts-preview-label' ).text( 'Playing...' );
-			$( '#wp-tts-preview-btn' ).css( 'background', 'linear-gradient(135deg, #d60017, #b50014)' );
-			$( '#wp-tts-stop-preview-btn' ).show();
-			$( '#wp-tts-wave' ).show();
+			$( '#wpspeech-preview-label' ).text( 'Playing...' );
+			$( '#wpspeech-preview-btn' ).css( 'background', 'linear-gradient(135deg, #d60017, #b50014)' );
+			$( '#wpspeech-stop-preview-btn' ).show();
+			$( '#wpspeech-wave' ).show();
 		}
 
 		function stopPreviewUI() {
 			isPreviewPlaying = false;
-			$( '#wp-tts-preview-label' ).text( 'Play Preview' );
-			$( '#wp-tts-preview-btn' ).css( 'background', '' );
-			$( '#wp-tts-stop-preview-btn' ).hide();
-			$( '#wp-tts-wave' ).hide();
+			$( '#wpspeech-preview-label' ).text( 'Play Preview' );
+			$( '#wpspeech-preview-btn' ).css( 'background', '' );
+			$( '#wpspeech-stop-preview-btn' ).hide();
+			$( '#wpspeech-wave' ).hide();
 		}
 
 	});

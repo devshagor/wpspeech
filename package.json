@@ -1,8 +1,8 @@
 {
-	"name": "wp-text-to-speech",
+	"name": "wpspeech",
 	"version": "1.0.0",
-	"description": "WP Text to Speech - Browser-based TTS player for WordPress",
-	"author": "WebAppick",
+	"description": "Wpspeech - Browser-based TTS player for WordPress",
+	"author": "Devshagor",
 	"license": "GPL-2.0-or-later",
 	"private": true,
 	"scripts": {

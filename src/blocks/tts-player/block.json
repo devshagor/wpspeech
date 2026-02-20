@@ -1,9 +1,9 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "wp-tts/player",
+	"name": "wpspeech/player",
 	"version": "1.0.0",
-	"title": "Text to Speech Player",
+	"title": "WP Speech Player",
 	"category": "widgets",
 	"icon": "controls-volumeon",
 	"description": "Add a text-to-speech player anywhere in your content. Automatically disables the global auto-insertion for this post.",
@@ -13,7 +13,7 @@
 		"multiple": false,
 		"reusable": false
 	},
-	"textdomain": "wp-text-to-speech",
+	"textdomain": "wpspeech",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./editor.css",
 	"render": "file:./render.php"

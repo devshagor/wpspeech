@@ -1,6 +1,6 @@
-=== WP Text to Speech ===
-Contributors: webappick
-Donate link: https://webappick.com/
+=== Wpspeech ===
+Contributors: devshagor
+Donate link: https://devshagor.com/
 Tags: text-to-speech, tts, accessibility, audio, speech
 Requires at least: 6.0
 Tested up to: 6.9
@@ -13,7 +13,7 @@ Add a text-to-speech player to your posts and pages using the browser's built-in
 
 == Description ==
 
-WP Text to Speech adds a play button to your articles that reads the content aloud using the browser's built-in speech synthesis engine. No external API keys, no usage costs, no third-party services.
+Wpspeech adds a play button to your articles that reads the content aloud using the browser's built-in speech synthesis engine. No external API keys, no usage costs, no third-party services.
 
 **Features:**
 
@@ -32,15 +32,15 @@ WP Text to Speech adds a play button to your articles that reads the content alo
 
 **Gutenberg Block:**
 
-Search for "Text to Speech Player" in the block inserter to place the player at any position in your content. The block automatically disables global auto-insertion for that post to prevent duplicates.
+Search for "WP Speech Player" in the block inserter to place the player at any position in your content. The block automatically disables global auto-insertion for that post to prevent duplicates.
 
 **REST API for Mobile Apps (opt-in):**
 
 The plugin includes an optional REST API that must be explicitly enabled from the settings page. Once enabled it provides read-only endpoints that return published article text split into sentences, ready for native TTS engines:
 
-* `GET /wp-json/wp-tts/v1/speech/{id}` — Get article text for TTS
-* `GET /wp-json/wp-tts/v1/settings` — Get TTS configuration
-* `GET /wp-json/wp-tts/v1/posts` — List TTS-enabled posts
+* `GET /wp-json/wpspeech/v1/speech/{id}` — Get article text for TTS
+* `GET /wp-json/wpspeech/v1/settings` — Get TTS configuration
+* `GET /wp-json/wpspeech/v1/posts` — List TTS-enabled posts
 
 All endpoints are read-only and only expose publicly available published content. Works with `expo-speech`, `react-native-tts`, or any native TTS library.
 
@@ -53,9 +53,9 @@ All endpoints are read-only and only expose publicly available published content
 
 == Installation ==
 
-1. Upload the `wp-text-to-speech` folder to `/wp-content/plugins/`
+1. Upload the `wpspeech` folder to `/wp-content/plugins/`
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Go to Text to Speech > Settings to configure voice and display options
+3. Go to WP Speech > Settings to configure voice and display options
 4. Visit any single post to see the player
 
 == Frequently Asked Questions ==
@@ -70,11 +70,11 @@ Chrome 33+, Safari 7+, Firefox 49+, Edge 14+, and most modern mobile browsers.
 
 = Can I place the player anywhere I want? =
 
-Yes. Use the "Text to Speech Player" Gutenberg block to place the player at any position within your content. When the block is used, global auto-insertion is automatically skipped for that post.
+Yes. Use the "WP Speech Player" Gutenberg block to place the player at any position within your content. When the block is used, global auto-insertion is automatically skipped for that post.
 
 = Can I use this with my React Native app? =
 
-Yes. Enable the REST API from Text to Speech > Settings > API tab, then use the endpoints to fetch article text for native TTS playback.
+Yes. Enable the REST API from WP Speech > Settings > API tab, then use the endpoints to fetch article text for native TTS playback.
 
 = Why do voices sound different on different devices? =
 
@@ -82,7 +82,7 @@ Voices are provided by the operating system, not the plugin. Available voices va
 
 = Can I choose which post types show the player? =
 
-Yes. Go to Text to Speech > Settings > Display tab and select which post types should show the player.
+Yes. Go to WP Speech > Settings > Display tab and select which post types should show the player.
 
 = Does the player appear on archive pages? =
 
@@ -94,7 +94,7 @@ No. The plugin only loads its small CSS and JS files on singular pages where TTS
 
 = Is the REST API enabled by default? =
 
-No. The REST API is disabled by default and must be explicitly enabled by an administrator from Text to Speech > Settings > API tab.
+No. The REST API is disabled by default and must be explicitly enabled by an administrator from WP Speech > Settings > API tab.
 
 == Screenshots ==
 
@@ -110,7 +110,7 @@ No. The REST API is disabled by default and must be explicitly enabled by an adm
 = 1.0.0 =
 * Initial release
 * Browser-based TTS using Web Speech API
-* Admin settings dashboard under Text to Speech menu
+* Admin settings dashboard under WP Speech menu
 * Voice, speed, pitch, and volume controls
 * Enable/disable per post type
 * Customizable button color and position (before/after content)

@@ -1,4 +1,4 @@
-# WP Text to Speech
+# Wpspeech
 
 A WordPress plugin that adds text-to-speech to your posts and pages. Works on the web via the **Web Speech API** and exposes a **REST API** for React Native and other mobile apps to use native TTS engines.
 
@@ -17,9 +17,9 @@ A WordPress plugin that adds text-to-speech to your posts and pages. Works on th
 - Chrome Android keep-alive workaround
 
 ### REST API (React Native / Mobile Apps)
-- `GET /wp-json/wp-tts/v1/speech/{id}` - Get article text split into sentences
-- `GET /wp-json/wp-tts/v1/settings` - Get TTS configuration
-- `GET /wp-json/wp-tts/v1/posts` - List TTS-enabled posts with metadata
+- `GET /wp-json/wpspeech/v1/speech/{id}` - Get article text split into sentences
+- `GET /wp-json/wpspeech/v1/settings` - Get TTS configuration
+- `GET /wp-json/wpspeech/v1/posts` - List TTS-enabled posts with metadata
 - Clean plain text extraction (HTML stripped, entities decoded)
 - Estimated reading duration per article
 - Works with `expo-speech`, `react-native-tts`, or any native TTS library
@@ -28,15 +28,15 @@ A WordPress plugin that adds text-to-speech to your posts and pages. Works on th
 
 ## Installation
 
-1. Upload `wp-text-to-speech` folder to `/wp-content/plugins/`
+1. Upload `wpspeech` folder to `/wp-content/plugins/`
 2. Activate in **WP Admin > Plugins**
-3. Configure at **Settings > Text to Speech**
+3. Configure at **Settings > WP Speech**
 
 ---
 
 ## Admin Settings
 
-**Settings > Text to Speech**
+**Settings > WP Speech**
 
 ### Voice Settings
 
@@ -61,7 +61,7 @@ A WordPress plugin that adds text-to-speech to your posts and pages. Works on th
 
 ## REST API Reference
 
-All endpoints are public (no authentication required). Base URL: `https://yoursite.com/wp-json/wp-tts/v1`
+All endpoints are public (no authentication required). Base URL: `https://yoursite.com/wp-json/wpspeech/v1`
 
 ---
 
@@ -160,7 +160,7 @@ Returns a paginated list of posts that have TTS enabled.
       "featured_image": "https://yoursite.com/wp-content/uploads/bogo.jpg",
       "author": "John Doe",
       "date": "2025-06-15T10:30:00+00:00",
-      "speech_endpoint": "https://yoursite.com/wp-json/wp-tts/v1/speech/42"
+      "speech_endpoint": "https://yoursite.com/wp-json/wpspeech/v1/speech/42"
     }
   ],
   "total": 25,
@@ -197,7 +197,7 @@ export function ArticlePlayer({ postId }) {
 
   // Fetch speech data from WordPress
   useEffect(() => {
-    fetch(`${SITE_URL}/wp-json/wp-tts/v1/speech/${postId}`)
+    fetch(`${SITE_URL}/wp-json/wpspeech/v1/speech/${postId}`)
       .then(res => res.json())
       .then(data => {
         setSentences(data.sentences);
@@ -341,7 +341,7 @@ export function useArticleTTS(postId) {
   const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
-    fetch(`${SITE_URL}/wp-json/wp-tts/v1/speech/${postId}`)
+    fetch(`${SITE_URL}/wp-json/wpspeech/v1/speech/${postId}`)
       .then(res => res.json())
       .then(data => {
         setSentences(data.sentences);
@@ -407,7 +407,7 @@ export function useArticleTTS(postId) {
 const [posts, setPosts] = useState([]);
 
 useEffect(() => {
-  fetch(`${SITE_URL}/wp-json/wp-tts/v1/posts?per_page=20`)
+  fetch(`${SITE_URL}/wp-json/wpspeech/v1/posts?per_page=20`)
     .then(res => res.json())
     .then(data => setPosts(data.posts));
 }, []);
@@ -430,7 +430,7 @@ useEffect(() => {
 4. Sentence-by-sentence playback avoids Chrome's 15-second utterance timeout
 
 ### Mobile App (React Native)
-1. App calls `GET /wp-json/wp-tts/v1/speech/{id}`
+1. App calls `GET /wp-json/wpspeech/v1/speech/{id}`
 2. API returns clean plain text + sentences array + TTS settings
 3. App feeds sentences to `expo-speech` or `react-native-tts`
 4. Native TTS engine handles speech using device voices (Siri, Google TTS, Samsung TTS)
@@ -442,21 +442,21 @@ useEffect(() => {
 ## File Structure
 
 ```
-wp-text-to-speech/
-├── wp-text-to-speech.php            # Plugin bootstrap
+wpspeech/
+├── wpspeech.php            # Plugin bootstrap
 ├── uninstall.php                     # Cleanup on delete
 ├── README.md                         # This file
 ├── includes/
-│   ├── class-wp-tts-admin.php        # Admin settings (WordPress Settings API)
-│   ├── class-wp-tts-frontend.php     # Web frontend: the_content filter
-│   └── class-wp-tts-rest-api.php     # REST API for React Native / mobile apps
+│   ├── class-wpspeech-admin.php        # Admin settings (WordPress Settings API)
+│   ├── class-wpspeech-frontend.php     # Web frontend: the_content filter
+│   └── class-wpspeech-rest-api.php     # REST API for React Native / mobile apps
 └── assets/
     ├── js/
-    │   ├── wp-tts-admin.js           # Admin: voice dropdown, preview
-    │   └── wp-tts-frontend.js        # Web: Speech API player
+    │   ├── wpspeech-admin.js           # Admin: voice dropdown, preview
+    │   └── wpspeech-frontend.js        # Web: Speech API player
     └── css/
-        ├── wp-tts-admin.css          # Admin styles
-        └── wp-tts-frontend.css       # Player styles (responsive)
+        ├── wpspeech-admin.css          # Admin styles
+        └── wpspeech-frontend.css       # Player styles (responsive)
 ```
 
 ---
@@ -485,7 +485,7 @@ wp-text-to-speech/
 The post is either not published or the ID is wrong. Only published posts are returned.
 
 ### API returns 403 `tts_not_enabled`
-The post type isn't enabled. Go to **Settings > Text to Speech** and check the post type under "Enable on."
+The post type isn't enabled. Go to **Settings > WP Speech** and check the post type under "Enable on."
 
 ### No sound in React Native
 - **Expo**: Ensure `expo-speech` is installed and the app has audio permissions

@@ -1,8 +1,8 @@
 <?php
 /**
- * Gutenberg blocks registration for WP Text to Speech.
+ * Gutenberg blocks registration for Wpspeech.
  *
- * @package WP_Text_To_Speech
+ * @package Wpspeech
  * @since   1.1.0
  */
 
@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class WP_TTS_Blocks
+ * Class WPSPEECH_Blocks
  *
  * Registers all Gutenberg blocks provided by the plugin.
  * Blocks source lives in src/blocks/{block-name}/.
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.1.0
  */
-class WP_TTS_Blocks {
+class WPSPEECH_Blocks {
 
 	/**
 	 * Constructor. Register hooks.
@@ -63,8 +63,8 @@ class WP_TTS_Blocks {
 	 */
 	private function discover_blocks() {
 		$blocks     = array();
-		$build_dir  = WP_TTS_PLUGIN_DIR . 'build/blocks/';
-		$src_dir    = WP_TTS_PLUGIN_DIR . 'src/blocks/';
+		$build_dir  = WPSPEECH_PLUGIN_DIR . 'build/blocks/';
+		$src_dir    = WPSPEECH_PLUGIN_DIR . 'src/blocks/';
 
 		// Scan src/blocks/ for all block folders.
 		$scan_dir = is_dir( $src_dir ) ? $src_dir : '';
@@ -105,14 +105,14 @@ class WP_TTS_Blocks {
 	 * @return void
 	 */
 	public function localize_editor_data() {
-		$options       = get_option( WP_TTS_OPTION_KEY, array() );
+		$options       = get_option( WPSPEECH_OPTION_KEY, array() );
 		$enabled_types = isset( $options['enabled_post_types'] ) ? (array) $options['enabled_post_types'] : array( 'post' );
 		$button_color  = isset( $options['button_color'] ) ? $options['button_color'] : '#d60017';
 
-		wp_localize_script( 'wp-tts-player-editor-script', 'wpTtsBlockEditor', array(
+		wp_localize_script( 'wpspeech-player-editor-script', 'wpTtsBlockEditor', array(
 			'enabledPostTypes' => $enabled_types,
 			'buttonColor'      => $button_color,
-			'settingsUrl'      => admin_url( 'admin.php?page=wp-text-to-speech' ),
+			'settingsUrl'      => admin_url( 'admin.php?page=wpspeech' ),
 		) );
 	}
 }

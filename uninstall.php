@@ -1,10 +1,10 @@
 <?php
 /**
- * Uninstall handler for WP Text to Speech.
+ * Uninstall handler for Wpspeech.
  *
  * Removes all plugin data when the plugin is deleted via the WordPress admin.
  *
- * @package WP_Text_To_Speech
+ * @package Wpspeech
  * @since   1.0.0
  */
 
@@ -13,4 +13,4 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-delete_option( 'wp_tts_settings' );
+delete_option( 'wpspeech_settings' );
